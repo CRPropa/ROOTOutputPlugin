@@ -3,10 +3,20 @@ cmake_minimum_required(VERSION 2.8.12)
 # Change name of the library to something meaningful!
 set(PLUGINNAME "CRPropaROOTOutput")
 project(${PLUGINNAME} C CXX)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}" ${CMAKE_MODULE_PATH})
 
 find_package(PythonInterp)
 find_package(PythonLibs)
 find_package(SWIG REQUIRED)
+
+find_package(ROOT REQUIRED)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ROOT_CFLAGS}")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ROOT_LIBS}")
+set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${ROOT_LIBS}")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ROOT_LIBS}")
+include_directories(${ROOT_INCDIR})
+
+
 
 # get information on crpropa
 execute_process(COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/findCRPropa.py" swig_interface OUTPUT_VARIABLE crpropaSwigPath)
@@ -47,6 +57,7 @@ sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))"
         OUTPUT_VARIABLE PYTHON_SITE_PACKAGES
         OUTPUT_STRIP_TRAILING_WHITESPACE
         )
+
 # Uncomment these lines for installation of the plugin
 
 # install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PLUGINNAME}.py" DESTINATION "${PYTHON_SITE_PACKAGES}/${PLUGINNAME}")
