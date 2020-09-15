@@ -11,8 +11,8 @@ find_package(SWIG REQUIRED)
 
 find_package(ROOT REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ROOT_CFLAGS}")
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ROOT_LIBS}")
-set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${ROOT_LIBS}")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ROOT_LIBS} -lcrpropa")
+set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${ROOT_LIBS} -lcrpropa")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ROOT_LIBS}")
 include_directories(${ROOT_INCDIR})
 
@@ -33,8 +33,11 @@ find_path(CRPROPA_INCLUDES
   HINTS crpropa/ include/crpropa ${crpropaInstallPrefix}/include/
   )
 
+find_library(CRPROPA_LIB NAMES crpropa libcrpropa HINTS crpropa/ lib/crpropa crpropa/lib ${crpropaInstallPrefix}/lib/)
+
 message(STATUS "CRPropa SWIG interface files: ${CRPROPA_SWIG_INTERFACE_FILES}")
 message(STATUS "CRPropa includes : ${CRPROPA_INCLUDES}")
+message(STATUS "CRPropa lib: ${CRPROPA_LIB}")
 
 # swig plugin
 set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/${PLUGINNAME}_wrap.cxx PROPERTIES GENERATED true )
@@ -47,6 +50,8 @@ include_directories(include ${CMAKE_CURRENT_BINARY_DIR}/include ${CRPROPA_INCLUD
 add_library(${PLUGINNAME} MODULE 
   ${CMAKE_CURRENT_BINARY_DIR}/${PLUGINNAME}_wrap.cxx
   ${CMAKE_CURRENT_SOURCE_DIR}/${PLUGINNAME}.cc)
+
+target_link_libraries(${PLUGINNAME} ${CRPROPA_LIB} ${PYTHON_LIBRARIES})
 
 set_target_properties(${PLUGINNAME} PROPERTIES PREFIX "")
 set_target_properties(${PLUGINNAME} PROPERTIES OUTPUT_NAME "_${PLUGINNAME}")
