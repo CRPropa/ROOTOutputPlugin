@@ -1,5 +1,5 @@
 /* name of the plugin: myPlugin*/
-%module(directors="1", threads="1", allprotected="1") myPlugin
+%module(directors="1", threads="1", allprotected="1") CRPropaROOTOutput
 
 /* Exceptions required */
 %include "exception.i"
