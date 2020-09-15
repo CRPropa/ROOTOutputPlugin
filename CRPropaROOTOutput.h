@@ -1,23 +1,20 @@
-/// Example plugin for CRPropa.
-///
-/// Please consider sharing the awesome plugin with you fellow researchers by
-/// creating a eperate repository for your project. We maintain a list of
-/// plugins to CRPropa on our webpage and are happy to add a link to your
-/// project, just send us: (name of the plugin, short description, url)
+/// ROOT Output Plugin for crpropa  
+///  Originally by Tobias Winchen 
+//   Updated by Cosmin Deaconu <cozzyd@kicp.uchicago.edu> 2020 
 
 #include <crpropa/Module.h>
 #include <TFile.h>
-#include <TNtuple.h>
 #include <TTree.h>
 #include <TThread.h>
+#include <omp.h> 
 
-using namespace crpropa;
+
 
 /**
  @class ROOTTrajectoryOutput1D
  @brief Saves 1D trajectory information to a ROOT file.
  */
-class ROOTTrajectoryOutput1D: public Module {
+class ROOTTrajectoryOutput1D: public crpropa::Module {
 	mutable TFile *ROOTFile;
 	mutable TTree *Tree;
 
@@ -27,7 +24,8 @@ class ROOTTrajectoryOutput1D: public Module {
 public:
 	ROOTTrajectoryOutput1D(std::string filename);
 	~ROOTTrajectoryOutput1D();
-	void process(Candidate *candidate) const;
+	void process(crpropa::Candidate *candidate) const;
+  mutable omp_lock_t lock; 
 	void close();
 };
 
@@ -35,10 +33,9 @@ public:
  @class ROOTTrajectoryOutput3D
  @brief Saves 3D trajectory information to a ROOT file.
  */
-class ROOTTrajectoryOutput3D: public Module {
+class ROOTTrajectoryOutput3D: public crpropa::Module {
 	mutable TFile *ROOTFile;
 	mutable TTree *Tree;
-
 	mutable int Particle_Type;
 	mutable float Energy_EeV;
 	mutable float TrajectoryLength_Mpc;
@@ -48,7 +45,8 @@ class ROOTTrajectoryOutput3D: public Module {
 public:
 	ROOTTrajectoryOutput3D(std::string filename);
 	~ROOTTrajectoryOutput3D();
-	void process(Candidate *candidate) const;
+	void process(crpropa::Candidate *candidate) const;
+  mutable omp_lock_t lock; 
 	void close();
 };
 
@@ -56,7 +54,7 @@ public:
  @class ROOTEventOutput1D
  @brief Saves 1D event information to a ROOT file.
  */
-class ROOTEventOutput1D: public Module {
+class ROOTEventOutput1D: public crpropa::Module {
 	mutable TFile *ROOTFile;
 	mutable TTree *Tree;
 
@@ -66,7 +64,8 @@ class ROOTEventOutput1D: public Module {
 public:
 	ROOTEventOutput1D(std::string filename);
 	~ROOTEventOutput1D();
-	void process(Candidate *candidate) const;
+	void process(crpropa::Candidate *candidate) const;
+  mutable omp_lock_t lock; 
 	void close();
 };
 
@@ -74,7 +73,7 @@ public:
  @class ROOTEventOutput3D
  @brief Saves 3D event information to a ROOT file.
  */
-class ROOTEventOutput3D: public Module {
+class ROOTEventOutput3D: public crpropa::Module {
 	mutable TFile *ROOTFile;
 	mutable TTree *Tree;
 
@@ -89,7 +88,8 @@ class ROOTEventOutput3D: public Module {
 public:
 	ROOTEventOutput3D(std::string filename);
 	~ROOTEventOutput3D();
-	void process(Candidate *candidate) const;
+	void process(crpropa::Candidate *candidate) const;
+  mutable omp_lock_t lock; 
 	void close();
 };
 
@@ -97,7 +97,7 @@ public:
  @class ROOTPhotonOutput1D
  @brief Records EM-particles to a ROOT file.
  */
-class ROOTPhotonOutput1D: public Module {
+class ROOTPhotonOutput1D: public crpropa::Module {
 	mutable TFile *ROOTFile;
 	mutable TTree *Tree;
 
@@ -107,7 +107,8 @@ class ROOTPhotonOutput1D: public Module {
 public:
 	ROOTPhotonOutput1D(std::string filename);
 	~ROOTPhotonOutput1D();
-	void process(Candidate *candidate) const;
+	void process(crpropa::Candidate *candidate) const;
+  mutable omp_lock_t lock; 
 	void close();
 };
 
