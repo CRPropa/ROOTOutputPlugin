@@ -32,7 +32,7 @@ ROOTEventOutput1D::ROOTEventOutput1D(std::string filename) : crpropa::Module() {
 	Tree->Branch("TrajectoryLength_Mpc", &TrajectoryLength_Mpc, "TrajectoryLength_Mpc/F" );
 	Tree->Branch("Initial_Type", &Initial_Type, "Initial_Type/I" );
 	Tree->Branch("Initial_Energy_EeV", &Initial_Energy_EeV, "Initial_Energy_EeV/F" );
-}
+ }
 
 void ROOTEventOutput1D::close(){
 
@@ -135,8 +135,6 @@ ROOTTrajectoryOutput1D::ROOTTrajectoryOutput1D(std::string filename) : crpropa::
 	Tree->Branch("Particle_Type", &Particle_Type, "Particle_Type/I");
 	Tree->Branch("Energy_EeV", &Energy_EeV, "Energy_EeV/F" );
 	Tree->Branch("Position_Mpc", &Position_Mpc, "Position_Mpc/F" );
-
-	TThread::UnLock();
 }
 
 void ROOTTrajectoryOutput1D::close() {
