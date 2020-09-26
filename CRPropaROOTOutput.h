@@ -25,7 +25,7 @@ public:
 	ROOTTrajectoryOutput1D(std::string filename);
 	~ROOTTrajectoryOutput1D();
 	void process(crpropa::Candidate *candidate) const;
-  mutable omp_lock_t lock; 
+        mutable omp_lock_t lock; 
 	void close();
 };
 
@@ -46,7 +46,7 @@ public:
 	ROOTTrajectoryOutput3D(std::string filename);
 	~ROOTTrajectoryOutput3D();
 	void process(crpropa::Candidate *candidate) const;
-  mutable omp_lock_t lock; 
+        mutable omp_lock_t lock; 
 	void close();
 };
 
@@ -65,7 +65,7 @@ public:
 	ROOTEventOutput1D(std::string filename);
 	~ROOTEventOutput1D();
 	void process(crpropa::Candidate *candidate) const;
-  mutable omp_lock_t lock; 
+        mutable omp_lock_t lock; 
 	void close();
 };
 
@@ -89,7 +89,7 @@ public:
 	ROOTEventOutput3D(std::string filename);
 	~ROOTEventOutput3D();
 	void process(crpropa::Candidate *candidate) const;
-  mutable omp_lock_t lock; 
+        mutable omp_lock_t lock; 
 	void close();
 };
 
@@ -108,7 +108,7 @@ public:
 	ROOTPhotonOutput1D(std::string filename);
 	~ROOTPhotonOutput1D();
 	void process(crpropa::Candidate *candidate) const;
-  mutable omp_lock_t lock; 
+        mutable omp_lock_t lock; 
 	void close();
 };
 
